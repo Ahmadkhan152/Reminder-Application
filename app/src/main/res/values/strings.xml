@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Remainder</string>
+    <string name="noRecordFound">No Record Found</string>
+</resources>
