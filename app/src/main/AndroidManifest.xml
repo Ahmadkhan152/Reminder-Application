@@ -4,13 +4,13 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/_173002_alarm_alert_bell_internet_notice_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/_173002_alarm_alert_bell_internet_notice_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.Remainder">
         <activity
-            android:name=".RecyclerviewActivity"
+            android:name=".HomeActivity"
             android:exported="true">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
@@ -18,9 +18,9 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter></activity>
         <activity
-            android:name=".DateTimeActivity"
+            android:name=".GetDateAndTimeActivity"
             android:exported="false"
-            android:parentActivityName=".RecyclerviewActivity">
+            android:parentActivityName=".HomeActivity">
         </activity>
         <receiver android:name=".AlarmReceiver"></receiver>
     </application>

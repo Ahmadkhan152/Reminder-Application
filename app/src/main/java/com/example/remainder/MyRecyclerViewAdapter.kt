@@ -1,6 +1,5 @@
 package com.example.remainder
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
@@ -11,11 +10,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.remainder.db.dbSQLite
+import com.example.remainder.dataclass.ModelClass
+import com.example.remainder.database.DataBaseSQLite
 
-class MyRecyclerViewAdapter(var context: Context,val data:ArrayList<Data>, val recyclerInterface:RecyclerInterface): RecyclerView.Adapter<MyRecyclerViewAdapter.viewholder>() {
+class MyRecyclerViewAdapter(var context: Context, val data:ArrayList<ModelClass>, val recyclerInterface:RecyclerInterface): RecyclerView.Adapter<MyRecyclerViewAdapter.viewholder>() {
     class viewholder(itemView:View):RecyclerView.ViewHolder(itemView)
     {
         val tvDate:TextView=itemView.findViewById(R.id.tvDate)
@@ -38,22 +37,19 @@ class MyRecyclerViewAdapter(var context: Context,val data:ArrayList<Data>, val r
         holder.tvEvent.text = data[position].event
         holder.ivDelete.setOnClickListener {
             val builder = AlertDialog.Builder(context)
-            builder.setTitle("Alert!!")
+            builder.setTitle("Deleted")
             builder.setMessage("Do You Want To Continue")
-            builder.setPositiveButton("Yes", {a,b->
-                deleteEntry(position,id)
-                if (position==0)
-                {
-                    Toast.makeText(context, NO_RECORD,Toast.LENGTH_SHORT).show()
-                    //holder.tvNoRecord?.text = NO_RECORD
-                    //context.startActivity(context,)
+            builder.setPositiveButton("Yes") { a, b ->
+                deleteEntry(position, id)
+                if (position == 0 && data.size==0) {
+                    Toast.makeText(context, NO_RECORD, Toast.LENGTH_SHORT).show()
                     recyclerInterface.displayNoRecord()
                 }
-            })
+            }
             builder.setNegativeButton("No",DialogInterface.OnClickListener { dialogInterface, i ->  })
             builder.show()}
         holder.ivEdit.setOnClickListener{
-            val shifter:Intent= Intent(context,DateTimeActivity::class.java)
+            val shifter:Intent= Intent(context,GetDateAndTimeActivity::class.java)
             val id=data[position].id
             val date=data[position].date
             val time=data[position].time
@@ -70,7 +66,7 @@ class MyRecyclerViewAdapter(var context: Context,val data:ArrayList<Data>, val r
     }
     fun deleteEntry(postion:Int,id:Int)
     {
-        var myDB:dbSQLite = dbSQLite(context)
+        var myDB:DataBaseSQLite = DataBaseSQLite(context)
         myDB.writableDatabase
         myDB.deleteEntry(id)
         myDB.readData()
